@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EmpresaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //Rutas
 Route::apiResource('empresas', EmpresaController::class)->middleware('auth.routes');
+
+Route::apiResource('clientes', ClienteController::class)->middleware('auth.routes');

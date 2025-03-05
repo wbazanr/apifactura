@@ -16,12 +16,11 @@ class EmpresaController extends Controller
     protected $respuesta_error = "Error inesperado";
 
     /**
-     * Todos los datos.
+     * Todos los datos. 
      */
     public function index()
     {
-        try {
-            // throw new \Exception('error');
+        try { 
             $empresa = Empresa::all();
             //   return response()->json($empresa,200);
             $respuesta = $this->get_response($this->respuesta_exitosa, 200, $empresa);
