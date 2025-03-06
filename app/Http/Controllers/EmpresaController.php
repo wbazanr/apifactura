@@ -24,7 +24,9 @@ class EmpresaController extends Controller
             $empresa = Empresa::all();
             //   return response()->json($empresa,200);
             $respuesta = $this->get_response($this->respuesta_exitosa, 200, $empresa);
+
             return response()->json($respuesta, 200);
+            
         } catch (Exception $e) {
             $respuesta = $this->get_response($this->respuesta_error, 500, []);
             return response()->json($respuesta, 500);
