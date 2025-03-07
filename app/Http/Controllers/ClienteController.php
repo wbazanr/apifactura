@@ -92,8 +92,9 @@ class ClienteController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        //request; recupera datos del client, puede ser posman, web,movil
         try {
-            $data = $request->validate([
+            $data = $request->validate([     
                 'nombre' => 'required|string|max:50',
                 'apellido' => 'required|string',
                 'ruc' => 'required|string|max:100',
