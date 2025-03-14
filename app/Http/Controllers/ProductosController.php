@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Productos;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductosController extends Controller
 {
@@ -48,7 +49,7 @@ class ProductosController extends Controller
       
         if ($request->hasFile('imagen')) {
             
-            $data['imagen'] = $request->file('imagen')->store('public/productos');
+            $data['imagen'] = $request->file('imagen')->store('productos');
         }
 
         $response = Productos::create($data);
@@ -84,7 +85,36 @@ class ProductosController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+    try {
+        $data = $request->validate([
+            'nombre' => 'required|string|max:50',
+            'descripcion' => 'nullable|string|max:255',
+            'precio' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:500',
+        ]);
+
+        $productos=Productos::findOrFail($id);
+
+        if ($request->hasFile('imagen'))  {
+
+            if ($productos->imagen) {
+                Storage::disk('public')->delete($productos->imagen);
+
+            }
+            $data ['imagen']=$request->file('imagen')->store('productos','public');
+
+    }
+
+       $response =  $productos->update($data);
+
+        return response()->json($this->get_response($this->respuesta_exitosa,200,$response));
+        
+    } catch (Exception $e) {  
+        return $this->get_response($e->getMessage(),503,[]);
+
+    }
+
     }
 
     /**
@@ -92,6 +122,20 @@ class ProductosController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $producto = Productos ::findOrFail($id);
+            if ($producto->imagen) {
+                Storage::disk('public')->delete($producto->imagen);
+            }
+
+            $response = $producto->delete();
+
+            return response()->json($this->get_response($this->respuesta_exitosa,200,$response));
+        } catch (Exception $e) 
+        {
+            return $this->get_response($e->getMessage(),503,[]);
+        }
+
+
     }
 }
