@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\VentaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,3 +29,5 @@ Route::apiResource('empresas', EmpresaController::class)->middleware('auth.route
 Route::apiResource('clientes', ClienteController::class)->middleware('auth.routes');
 
 Route::apiResource('productos', ProductosController::class)->middleware('auth.routes');
+
+Route::apiResource('ventas', VentaController::class)->middleware('auth.routes');
