@@ -24,7 +24,7 @@ class ClienteController extends Controller
         }catch (Exception $e) {
 
             $repuesta = $this->get_response($this->respuesta_error,500,[]);
-            return response()->json($repuesta,500);
+            return response()->json($this->get_response($e->getMessage(),500,[]),504);
 
         }
     }
@@ -47,8 +47,8 @@ class ClienteController extends Controller
 
         ]);
         $response = Cliente::create($data);
-        $repuesta = $this->get_response($this->respusta_exitosa,200,$response);
-        return response()->json($repuesta,200);
+        $respuesta = $this->get_response($this->respusta_exitosa,200,$response);
+        return response()->json($respuesta,200);
 
     } catch (Exception $e) {
 

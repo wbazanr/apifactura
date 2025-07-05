@@ -77,7 +77,7 @@ class EmpresaController extends Controller
                 200,
                 $empresa
             );
-            return response()->json($respuesta);
+            return response()->json($respuesta,200);
         } catch (Exception $e) {
             return [
                 "errror" => true,
